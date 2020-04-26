@@ -1,0 +1,27 @@
+@font-face {
+	font-family: 'HorseShoes';
+	src: url('../font/horseshoes.ttf');
+}
+@font-face {
+	font-family: 'HorseShoesLemonade';
+	src: url('../font/horseshoeslemonade.ttf');
+}
+.navbar-brand {
+	font-family: 'HorseShoes', 'Helvetica', sans-serif;
+	font-size: 2em;
+}
+.lemonade {
+	font-family: 'HorseShoesLemonade', 'Helvetica', sans-serif;
+}
+#map {
+	width: 100%;
+	height: 500px;
+	border: 1px dashed black;
+}
+#listing {
+	padding: 5px;
+	max-height: 500px;
+	border: 1px dashed black;
+	overflow-y: scroll;
+	font-size: 0.8em;
+}

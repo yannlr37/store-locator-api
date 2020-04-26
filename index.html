@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Map API JS</title>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/app-style.css">
+</head>
+<body>
+
+	<nav class="navbar bg-dark">
+		<a class="navbar-brand" href="#"><span class="lemonade">123</span> Burger</a>
+	</nav>
+
+	<div class="container">
+
+		<h3>Deliscious hand-made burgers from New York</h3>
+
+		<div class="row">
+			<div class="col-md-8">
+				<div id="map"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="listing"></div>
+			</div>
+		</div>	
+	</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<script type="text/javascript" src="assets/js/pubsub.js"></script>
+	<script type="text/javascript" src="assets/js/poi.js"></script>
+	<script type="text/javascript" src="assets/js/map.js"></script>
+	<script type="text/javascript" src="assets/js/listing.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			// init (empty) map
+			var map = new Map('map', 40.741895, -73.989308);
+			map.init();
+
+			// init (empty) POI listing
+			var listing = new Listing('listing');
+			listing.init();
+
+			// init all POIs from customer's datafile
+			$.get('assets/json/pois.json')
+				.done(function(response) {
+					$.each(response, function(index, item) {
+						var poi = new Poi(item.latitude,item.longitude,item);
+						poi.init();
+						map.addPoi(poi);
+						map.refresh();
+					});
+				});
+
+			// add new POI on the thumb and refresh map
+			var tmp = {
+			    "title": "McDONALD'S",
+			    "description": "Nisi ex est veniam ea. Consequat nostrud reprehenderit irure ullamco nostrud adipisicing eiusmod Lorem nostrud enim commodo pariatur. Ad sint occaecat officia commodo nulla tempor. Culpa culpa nulla irure et mollit qui commodo esse esse exercitation qui. Sint ad mollit sint laborum ullamco est officia nisi Lorem. Sunt incididunt ex deserunt pariatur consequat aliqua. Nulla laboris adipisicing duis excepteur incididunt duis deserunt magna eiusmod non consectetur est.\r\n",
+			    "email": "candaceberry@mcdonalds.com",
+			    "phone": "+1 (931) 528-3086",
+			    "website": "https://www.bk.com",
+			    "latitude": 40.70335467951867,
+			    "longitude": -73.83455750806372
+			  };
+			var newPoi = new Poi(tmp.latitude, tmp.longitude, tmp);
+			newPoi.init();
+			map.addPoi(newPoi);
+			map.refresh();
+				
+		});
+	</script>
+</body>
+</html>
